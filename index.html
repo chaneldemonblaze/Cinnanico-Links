@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cinnanico | Links</title>
+  <link href="https://fonts.googleapis.com/css2?family=Emilys+Candy&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Emilys Candy", serif;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      color: #fff;
+      font-size: 20px;
+      text-align: center;
+    }
+
+    /* === SHADER BACKGROUND === */
+    #container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    canvas {
+      display: block;
+    }
+
+    /* === OVERLAY CONTENT === */
+    .overlay {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      backdrop-filter: brightness(0.7);
+    }
+
+    .links-container {
+      background: transparent;
+      border: 2px solid rgba(255, 182, 193, 0.7);
+      border-radius: 20px;
+      padding: 40px 20px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 0 20px rgba(255, 182, 193, 0.5);
+    }
+
+    .profile-pic {
+      width: 130px;
+      height: 130px;
+      object-fit: cover;
+      object-position: top;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 182, 193, 0.4);
+      box-shadow: 0 0 25px rgba(255, 182, 193, 0.8),
+                  0 0 45px rgba(173, 216, 230, 0.6);
+      margin-bottom: 15px;
+      animation: pfpGlow 2.5s infinite alternate;
+    }
+
+    @keyframes pfpGlow {
+      0% {
+        box-shadow: 
+          0 0 20px rgba(255, 182, 193, 0.7),
+          0 0 40px rgba(173, 216, 230, 0.5);
+      }
+      50% {
+        box-shadow: 
+          0 0 30px rgba(255, 182, 193, 0.9),
+          0 0 50px rgba(173, 216, 230, 0.7);
+      }
+      100% {
+        box-shadow: 
+          0 0 25px rgba(255, 182, 193, 0.8),
+          0 0 45px rgba(173, 216, 230, 0.6);
+      }
+    }
+
+    h1 {
+      font-size: 30px;
+      margin-bottom: 20px;
+      text-shadow: 0 0 5px rgba(255, 182, 193, 0.7);
+      word-break: break-word;
+    }
+
+    /* === SOCIAL ICONS === */
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    .social-icons img {
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      transition: transform 0.3s ease, filter 0.3s ease;
+      filter: brightness(0.9) contrast(1.1);
+    }
+
+    .social-icons img:hover {
+      transform: scale(1.2);
+      filter: brightness(1) contrast(1.2);
+    }
+
+    /* ===== CTA TEXT BELOW SOCIAL ICONS ===== */
+    .cta-text {
+      font-size: 16px;
+      color: #fff;
+      margin: 10px 0 15px 0;
+      letter-spacing: 0.5px;
+      font-weight: bold;
+      animation: bounceArrow 1.2s infinite, glowPulse 2s infinite alternate;
+      text-shadow: 
+        0 0 2px #ffb6c1,
+        0 0 4px #add8e6,
+    }
+
+    @keyframes bounceArrow {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-5px); }
+      60% { transform: translateY(-3px); }
+    }
+
+    @keyframes glowPulse {
+      0% {
+        text-shadow: 
+          0 0 1.5px #ffb6c1,
+          0 0 3px #add8e6,
+      }
+      50% {
+        text-shadow: 
+          0 0 2.5px #ffb6c1,
+          0 0 4px #add8e6,
+      }
+      100% {
+        text-shadow: 
+          0 0 2px #ffb6c1,
+          0 0 3.5px #add8e6,
+      }
+    }
+
+    /* === MAIN PHOTO LINK === */
+    .main-link {
+      display: inline-block;
+      position: relative;
+      width: 90%;
+      max-width: 320px;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 0 25px rgba(255, 182, 193, 0.8),
+                  0 0 45px rgba(173, 216, 230, 0.6);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: mainLinkGlow 2.5s infinite alternate;
+    }
+
+    .main-link:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 35px rgba(255, 182, 193, 0.9),
+                  0 0 55px rgba(173, 216, 230, 0.7);
+    }
+
+    @keyframes mainLinkGlow {
+      0% {
+        box-shadow:
+          0 0 20px rgba(255,182,193,0.7),
+          0 0 40px rgba(173,216,230,0.5);
+      }
+      50% {
+        box-shadow:
+          0 0 30px rgba(255,182,193,0.9),
+          0 0 50px rgba(173,216,230,0.7);
+      }
+      100% {
+        box-shadow:
+          0 0 25px rgba(255,182,193,0.8),
+          0 0 45px rgba(173,216,230,0.6);
+      }
+    }
+
+    .main-link img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      object-position: 50% 10%;
+      display: block;
+      filter: brightness(0.90);
+      transition: filter 0.3s ease;
+    }
+
+    .main-link:hover img {
+      filter: brightness(0.9);
+    }
+
+    .link-text {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      color: #fff;
+      font-size: 14px;
+      font-weight: bold;
+      text-decoration: none;
+      background: rgba(0,0,0,0.6);
+      padding: 10px 0;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      letter-spacing: 0.5px;
+      transition: background 0.3s ease;
+    }
+
+    .main-link:hover .link-text {
+        background: rgba(0, 0, 0, 0.8);
+    }
+
+    footer {
+      margin-top: 25px;
+      font-size: 0.7rem;
+      opacity: 0.9;
+    }
+
+    @media (max-width: 600px) {
+      .profile-pic { 
+        width: 100px; 
+        height: 100px; 
+        margin-bottom: 10px; 
+        box-shadow:
+          0 0 15px rgba(255, 182, 193, 0.7),
+          0 0 25px rgba(173, 216, 230, 0.5);
+    }
+      .links-container { padding: 20px 15px; }
+      .social-icons img { width: 25px; height: 25px; }
+      footer { font-size: 0.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SHADER BACKGROUND -->
+  <div id="container"></div>
+
+  <!-- LINK CONTENT -->
+  <div class="overlay">
+    <div class="links-container">
+      <img src="cinnanico-pfp.jpg" alt="Profile Picture" class="profile-pic" />
+      <h1>Nicky Nakamura</h1>
+
+      <!-- Social Icons -->
+      <div class="social-icons">
+        <a href="https://instagram.com/cinnanico" target="_blank">
+          <img src="instagram-logo.png" alt="Instagram">
+        </a>
+        <a href="https://www.tiktok.com/@cinnanakoss" target="_blank">
+          <img src="tiktok-logo.png" alt="TikTok">
+        </a>
+        <a href="https://x.com/cinnanico" target="_blank">
+          <img src="X-logo.png" alt="X">
+        </a>
+        <a href="https://throne.com/cinnanico" target="_blank">
+          <img src="throne-logo.png" alt="Throne">
+        </a>
+        <a href="https://twitch.tv/cinnanicos " target="_blank">
+            <img src="twitch-logo.png" alt="Twitch">
+          </a>
+      </div>
+
+      <div class="cta-text">
+        Come chat with me! ↓
+      </div>
+
+      <!-- Main OF Photo Button -->
+      <a href="https://onlyfans.com/cinnanicos" target="_blank" class="main-link">
+        <img src="cinnanico-of-photo.jpg" alt="Exclusive Content">
+        <span class="link-text">🩷My Exclusive Content🩷</span>
+      </a>
+
+      <footer>© 2025 CINNANICO</footer>
+    </div>
+  </div>
+
+  <!-- SHADER SCRIPTS -->
+  <script id="vertex" type="x-shader/x-vertex">
+    void main() {
+      gl_Position = vec4(position, 1.0);
+    }
+  </script>
+
+  <script id="fragment" type="x-shader/x-fragment">
+    #ifdef GL_ES
+    precision highp float;
+    #endif
+
+    uniform vec2 u_resolution;
+    uniform float u_time;
+
+    float random (vec2 st) {
+      return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+    }
+
+    void main() {
+      vec2 st = gl_FragCoord.y / u_resolution.xy;
+      st *= u_resolution.xy / 12.0;
+      vec2 ipos = floor(st);
+      vec3 color = vec3(abs(sin(u_time * 2.6 * random(ipos))), 0.5, 0.71);
+      gl_FragColor = vec4(color, 1.0);
+    }
+  </script>
+
+  <script>
+    let camera, scene, renderer, clock;
+    let uniforms;
+
+    init();
+    animate();
+
+    function init() {
+      const container = document.getElementById("container");
+
+      clock = new THREE.Clock();
+      camera = new THREE.Camera();
+      camera.position.z = 1;
+
+      scene = new THREE.Scene();
+
+      const geometry = new THREE.PlaneBufferGeometry(2, 2);
+
+      uniforms = {
+        u_time: { type: "f", value: 1.0 },
+        u_resolution: { type: "v2", value: new THREE.Vector2() },
+      };
+
+      const material = new THREE.ShaderMaterial({
+        uniforms,
+        vertexShader: document.getElementById("vertex").textContent,
+        fragmentShader: document.getElementById("fragment").textContent
+      });
+
+      const mesh = new THREE.Mesh(geometry, material);
+      scene.add(mesh);
+
+      renderer = new THREE.WebGLRenderer();
+      renderer.setPixelRatio(window.devicePixelRatio);
+      container.appendChild(renderer.domElement);
+
+      onWindowResize();
+      window.addEventListener("resize", onWindowResize);
+    }
+
+    function onWindowResize() {
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      uniforms.u_resolution.value.x = renderer.domElement.width;
+      uniforms.u_resolution.value.y = renderer.domElement.height;
+    }
+
+    function render() {
+      uniforms.u_time.value = clock.getElapsedTime();
+      renderer.render(scene, camera);
+    }
+
+    function animate() {
+      render();
+      requestAnimationFrame(animate);
+    }
+  </script>
+
+</body>
+</html>
